@@ -1,7 +1,0 @@
-playground/__pycache__/models.cpython-38.pyc
-# ignore ALL .log files
-*.log
-*.cpython-38.pyc
-# ignore ALL files in ANY directory named temp
-temp/
-*.csh
