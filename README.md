@@ -1,1 +1,1 @@
-# STOREFRONT
+# STOREFRONT (django excersise)
