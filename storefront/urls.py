@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 import playground
+import debug_toolbar
 
 from playground import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('playground/',include('playground.urls'))
+    path('playground/',include('playground.urls')),
+    path('__debug__/', include('debug_toolbar.urls'))
 
 ]
