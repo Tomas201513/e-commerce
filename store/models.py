@@ -4,12 +4,12 @@ from pydoc import classify_class_attrs
 from turtle import title
 from django.db import models
 
-class Promotion(models.model):
+class Promotion(models.Model):
     description=models.CharField(max_length=255)
     discount=models.FloatField()
 
 
-class Collection (models.model):
+class Collection (models.Model):
     title=models.CharField(max_length=255)
     featured_prodduct=models.ForeignKey('Product',on_delete=models.SET_NULL,null=True,related_name='+')
 
@@ -22,7 +22,7 @@ class Product (models.Model):
     collection=models.ForeignKey(Collection,on_delete=models.PROTECT)
     promotions=models.ManyToManyField(Promotion)
 
-class Customer(models.model):
+class Customer(models.Model):
     MEMBERSHIP_BRONZ='B'
     MEMBERSHIP_SILVER='S'
     MEMBERSHIP_GOLD='G'
@@ -61,15 +61,15 @@ class OrderItem (models.Model):
     product=models.ForeignKey(Product,on_delete=models.PROTECT)
     
 
-class Address(models.model):
+class Address(models.Model):
     street=models.CharField(max_length=255)
     city=models.CharField(max_length=255)
     Customer=models.OneToOneField(Customer,on_delete=models.CASCADE,primary_key=True)
 
-class Cart (models.model):
+class Cart (models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
 
-class CartItem(models.model):
+class CartItem(models.Model):
     quantity=models.PositiveSmallIntegerField()
     cart=models.ForeignKey(Cart,on_delete=models.CASCADE)
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
