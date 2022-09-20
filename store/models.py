@@ -1,14 +1,8 @@
-import email
-from itertools import product
-from pydoc import classify_class_attrs
-from turtle import title
 from django.db import models
 
 class Promotion(models.Model):
     description=models.CharField(max_length=255)
     discount=models.FloatField()
-
-
 class Collection (models.Model):
     title=models.CharField(max_length=255)
     featured_prodduct=models.ForeignKey('Product',on_delete=models.SET_NULL,null=True,related_name='+')
@@ -27,7 +21,6 @@ class Customer(models.Model):
     MEMBERSHIP_SILVER='S'
     MEMBERSHIP_GOLD='G'
 
-
     MEMBERSHIP_CHOICES=[
         (MEMBERSHIP_BRONZ,'Bronz'),
         (MEMBERSHIP_SILVER,'Silver'),
@@ -38,7 +31,7 @@ class Customer(models.Model):
     email=models.EmailField(unique=True)
     phone=models.CharField(max_length=255)
     birth_date=models.DateTimeField(null=True)
-    membership=models.CharField(max_length='1',choices=MEMBERSHIP_CHOICES,default=MEMBERSHIP_BRONZ)
+    membership=models.CharField(max_length=1,choices=MEMBERSHIP_CHOICES,default=MEMBERSHIP_BRONZ)
 
 class Order(models.Model):
     PAYMENT_PENDING='P'
@@ -51,7 +44,7 @@ class Order(models.Model):
         (PAYMENT_COMPLETE,'Complete'),
         (PAYMENT_FAILED,'Failed') ]
     placed_at=models.DateTimeField(auto_now_add=True)
-    payment_status=models.CharField(max_length='1',choices=MEMBERSHIP_CHOICES,default=PAYMENT_PENDING)
+    payment_status=models.CharField(max_length=1,choices=MEMBERSHIP_CHOICES,default=PAYMENT_PENDING)
     customer=models.ForeignKey(Customer,on_delete=models.PROTECT)
 
 class OrderItem (models.Model):
