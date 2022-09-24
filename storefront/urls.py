@@ -24,5 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('playground/',include('playground.urls')),
     path('__debug__/', include('debug_toolbar.urls'))
+    # url(r'^favicon\.ico$',RedirectView.as_view(url='/static/images/favicon.ico'))
+
 
 ]
