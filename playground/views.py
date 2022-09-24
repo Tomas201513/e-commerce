@@ -21,7 +21,7 @@ def tom(request):
     except ObjectDoesNotExist:
         print('entry doesnt exist')
 
-def sena(request):
+def sena(request): 
 
     # x=Promotion.objects.filter(discount__range=(1000,5000))
     # x=Promotion.objects.filter(discount__gt=1000)
@@ -29,7 +29,8 @@ def sena(request):
     # x=Promotion.objects.filter(discount__lt=1000).filter(description__icontains='haha') 
     # x=Promotion.objects.filter(Q(discount__gt=1000)& Q(description__icontains='haha'))
     # x=Customer.objects.filter(first_name=F('last_name')).order_by('-birth_date')
-    x=Product.objects.select_related('title').all()
+    # x=Collection.objects.prefetch_related('title').all()
+    x=Collection.objects.select_related('featured_prodduct').all()
 
 
     return render(request,'teme.html',{'pro':list(x)})

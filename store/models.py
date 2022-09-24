@@ -3,15 +3,7 @@ from django.db import models
 class Promotion(models.Model):
     description=models.CharField(max_length=255)
     discount=models.FloatField()
-class Collection (models.Model):
-    title=models.CharField(max_length=255)
-    featured_prodduct=models.ForeignKey('Product',on_delete=models.SET_NULL,null=True,related_name='+')
-                    # to populate collection (one to many/ with FK)
-                    # INSERT INTO storefront.store_collection(title, featured_prodduct_id)
-                    # SELECT  'hat',id
-                    #   FROM storefront.store_product
-                    #  WHERE title = 'book'
-                    #  LIMIT 1
+
 class Product (models.Model):
     title=models.CharField(max_length=255)
     slug=models.SlugField()
@@ -21,7 +13,15 @@ class Product (models.Model):
     last_update=models.DateTimeField(auto_now=True)
     # collection=models.ForeignKey(Collection,on_delete=models.PROTECT, null=True, default=None, blank=True)
     promotions=models.ManyToManyField(Promotion)
-
+class Collection (models.Model):
+    title=models.CharField(max_length=255)
+    featured_prodduct=models.ForeignKey(Product,on_delete=models.SET_NULL,null=True,related_name='+')
+                    # to populate collection (one to many/ with FK)
+                    # INSERT INTO storefront.store_collection(title, featured_prodduct_id)
+                    # SELECT  'hat',id
+                    #   FROM storefront.store_product
+                    #  WHERE title = 'book'
+                    #  LIMIT 1
 class Customer(models.Model):
     MEMBERSHIP_BRONZ='B'
     MEMBERSHIP_SILVER='S'
