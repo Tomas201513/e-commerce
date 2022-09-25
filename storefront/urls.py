@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path,include
 import playground
 import debug_toolbar
+admin.site.site_header='አስተዳዳሪ ነኝ'
+admin.site.index_title='አስተዳዳሪ'
 
 from playground import views
 
