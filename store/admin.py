@@ -1,4 +1,5 @@
-from itertools import count
+from collections import Counter
+from itertools import count, product
 from pyexpat import model
 from django.contrib import admin
 from . import models
@@ -21,13 +22,14 @@ class CollectionAdmin(admin.ModelAdmin):
     # list_editable= ['featured_prodduct']
     list_per_page: 7
 
-
-    # def product_count(self,collection):
-    #     return collection.product_count
+    # def product_count(self,product):
+    #     return product.
+    # def product_count(self,product):
+    #     return product.pro_count
         
     # def get_queryset(self, request):
-    #     return super().get_queryset(request).annotate(
-    #         product_count=count('product')
+    #     return super(CollectionAdmin,self).get_queryset(request).annotate(
+    #         product_count=[for i in product]
     #     )
 
 class CustomerAdmin(admin.ModelAdmin):
@@ -39,6 +41,8 @@ class PromotionAdmin(admin.ModelAdmin):
     list_editable= ['discount']
     list_per_page: 7
 
+  
+        
 # Register your models here.
 
 admin.site.register(models.Collection, CollectionAdmin)

@@ -1,3 +1,4 @@
+from itertools import count
 from django.db import models
 
 class Promotion(models.Model):
@@ -36,9 +37,16 @@ class Collection (models.Model):
                     #   FROM storefront.store_product
                     #  WHERE title = 'book'
                     #  LIMIT 1
-    def the_Products(self):
-        return ','.join([i.title for i in self.Products.all()])
 
+    def the_Products(self):
+        return ', '.join([i.title for i in self.Products.all()])
+
+    # def count_Products(self):
+    #      return Collection.objects.select_related('Products').annotate(count_products=count('Products'))
+          
+    
+    
+    
     def __str__(self) -> str:
         return self.title
     class Meta:
