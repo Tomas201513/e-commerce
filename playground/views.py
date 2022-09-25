@@ -30,11 +30,11 @@ def sena(request):
     # x=Promotion.objects.filter(Q(discount__gt=1000)& Q(description__icontains='haha'))
     # x=Customer.objects.filter(first_name=F('last_name')).order_by('-birth_date')
     # x=Collection.objects.prefetch_related('title').all()
-    x=Collection.objects.select_related('featured_prodduct').all()
-
+    x=Product.objects.all()
 
     return render(request,'teme.html',{'pro':list(x)})
 
+    
 def lol(request):
 
     x=Customer.objects.filter(first_name=F('last_name'))
