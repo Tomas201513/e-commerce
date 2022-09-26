@@ -21,6 +21,8 @@ class Product (models.Model):
     def the_promotion(self):
         return ','.join([i.description for i in self.promotions.all()])
 
+    def promotion_counts(self):
+            return self.promotions.count()
     
     def __str__(self) -> str:
         return self.title

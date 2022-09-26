@@ -1,12 +1,9 @@
-from collections import Counter
-from itertools import count, product
-from pyexpat import model
 from django.contrib import admin
 from . import models
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display=['title','price','last_update','inventory_status','the_promotion']
+    list_display=['title','price','last_update','inventory_status','the_promotion','promotion_counts']
     list_editable= ['price']
     list_per_page: 7
     
