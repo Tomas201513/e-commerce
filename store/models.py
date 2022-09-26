@@ -3,7 +3,7 @@ from itertools import count
 from django.db import models
 from django.urls import reverse
 from django.utils.html import format_html, urlencode
-
+from django.core.validators import MinValueValidator
 
 class Promotion(models.Model):
     description=models.CharField( max_length=255)
@@ -18,10 +18,10 @@ class Product (models.Model):
     title=models.CharField(max_length=255)
     slug=models.SlugField()
     description=models.TextField()
-    price=models.DecimalField(max_digits=6,decimal_places=2)
+    price=models.DecimalField(max_digits=6,decimal_places=2,validators=[MinValueValidator(0)])
     inventory=models.IntegerField()
     last_update=models.DateTimeField(auto_now=True)
-    promotions=models.ManyToManyField(Promotion)
+    promotions=models.ManyToManyField(Promotion,blank=True)
 
     def the_promotion(self):
         return ', '.join([i.description for i in self.promotions.all()])
@@ -77,9 +77,7 @@ class Customer(models.Model):
         return self.first_name
     class Meta:
         db_table='store_customers'
-        indexes=[
-            models.Index(fields=['first_name','last_name'])
-        ]
+        indexes=[ models.Index(fields=['first_name','last_name'])]
         ordering=['first_name']
 
 class Order(models.Model):
@@ -134,7 +132,7 @@ class Cart (models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     
     def __str__(self) -> str:
-        return self.created_at
+        return str(self.created_at)
     class Meta:
         ordering=['created_at']
 
@@ -145,6 +143,6 @@ class CartItem(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return self.cart
+        return str(self.cart)
     class Meta:
         ordering=['cart']
