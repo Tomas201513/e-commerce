@@ -15,7 +15,6 @@ class Product (models.Model):
     price=models.DecimalField(max_digits=6,decimal_places=2)
     inventory=models.IntegerField()
     last_update=models.DateTimeField(auto_now=True)
-    # collection=models.ForeignKey('Collection',on_delete=models.PROTECT, null=True, default=title, blank=True)
     promotions=models.ManyToManyField(Promotion)
 
     def the_promotion(self):
@@ -32,22 +31,8 @@ class Collection (models.Model):
     title=models.CharField(max_length=255)
     Products=models.ManyToManyField(Product)
 
-    # featured_prodduct=models.ForeignKey(Product,on_delete=models.SET_NULL,null=True,related_name='+')
-                    # to populate collection (one to many/ with FK)
-                    # INSERT INTO storefront.store_collection(title, featured_prodduct_id)
-                    # SELECT  'hat',id
-                    #   FROM storefront.store_product
-                    #  WHERE title = 'book'
-                    #  LIMIT 1
-
     def the_Products(self):
-        return ', '.join([i.title for i in self.Products.all()])
-
-    # def count_Products(self):
-    #      return Collection.objects.select_related('Products').annotate(count_products=count('Products'))
-          
-    
-    
+        return ', '.join([i.title for i in self.Products.all()])    
     
     def __str__(self) -> str:
         return self.title

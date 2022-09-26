@@ -16,18 +16,8 @@ class ProductAdmin(admin.ModelAdmin):
     
 class CollectionAdmin(admin.ModelAdmin):
     list_display=['title','the_Products']
-    # list_editable= ['featured_prodduct']
     list_per_page: 7
 
-    # def product_count(self,product):
-    #     return product.
-    # def product_count(self,product):
-    #     return product.pro_count
-        
-    # def get_queryset(self, request):
-    #     return super(CollectionAdmin,self).get_queryset(request).annotate(
-    #         product_count=[for i in product]
-    #     )
 
 class CustomerAdmin(admin.ModelAdmin):
     list_display=['first_name','last_name','email','membership']
