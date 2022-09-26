@@ -1,5 +1,9 @@
+import imp
 from itertools import count
 from django.db import models
+from django.urls import reverse
+from django.utils.html import format_html, urlencode
+
 
 class Promotion(models.Model):
     description=models.CharField( max_length=255)
@@ -8,6 +12,8 @@ class Promotion(models.Model):
         return self.description
     class Meta:
         ordering=['description']
+
+
 class Product (models.Model):
     title=models.CharField(max_length=255)
     slug=models.SlugField()
@@ -21,12 +27,22 @@ class Product (models.Model):
         return ','.join([i.description for i in self.promotions.all()])
 
     def promotion_counts(self):
-            return self.promotions.count()
+        url=(
+            reverse('admin:store_promotion_changelist')
+            +'?' + urlencode({ 'promotions__id':str(Promotion.id)
+            })
+        )
+        return format_html('<a href="{}"> {} </a>',url,self.promotions.count())
+
+             
     
     def __str__(self) -> str:
         return self.title
     class Meta:
         ordering=['title']
+
+
+
 class Collection (models.Model):
     title=models.CharField(max_length=255)
     Products=models.ManyToManyField(Product)
