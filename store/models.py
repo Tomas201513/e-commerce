@@ -24,14 +24,11 @@ class Product (models.Model):
     promotions=models.ManyToManyField(Promotion)
 
     def the_promotion(self):
-        return ','.join([i.description for i in self.promotions.all()])
+        return ', '.join([i.description for i in self.promotions.all()])
 
     def promotion_counts(self):
-        url=(
-            reverse('admin:store_promotion_changelist')
-            +'?' + urlencode({ 'promotions__id':str(Promotion.id)
-            })
-        )
+        url=(reverse('admin:store_promotion_changelist')
+            +'?' + urlencode({ 'product__id':str(self.id)}))
         return format_html('<a href="{}"> {} </a>',url,self.promotions.count())
 
              
@@ -42,13 +39,17 @@ class Product (models.Model):
         ordering=['title']
 
 
-
 class Collection (models.Model):
     title=models.CharField(max_length=255)
     Products=models.ManyToManyField(Product)
 
     def the_Products(self):
         return ', '.join([i.title for i in self.Products.all()])    
+
+    def product_counts(self):
+        url=(reverse('admin:store_product_changelist')
+            +'?' + urlencode({ 'collection__id':str(self.id)}))
+        return format_html('<a href="{}"> {} </a>',url,self.Products.count())
     
     def __str__(self) -> str:
         return self.title
@@ -98,6 +99,9 @@ class Order(models.Model):
         return self.payment_status
     class Meta:
         ordering=['payment_status']
+
+
+
 class OrderItem (models.Model):
     quantity=models.PositiveSmallIntegerField()
     unit_price=models.DecimalField(max_digits=6,decimal_places=2)
@@ -105,9 +109,12 @@ class OrderItem (models.Model):
     product=models.ForeignKey(Product,on_delete=models.PROTECT)
     
     def __str__(self) -> str:
-        return self.product
+        return str(self.product)
     class Meta:
         ordering=['product']
+
+
+
 class Address(models.Model):
     street=models.CharField(max_length=255)
     zip=models.CharField(max_length=255)
@@ -118,12 +125,20 @@ class Address(models.Model):
         return self.street
     class Meta:
         ordering=['street']
+
+
+
+
+
 class Cart (models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
+    
     def __str__(self) -> str:
         return self.created_at
     class Meta:
         ordering=['created_at']
+
+
 class CartItem(models.Model):
     quantity=models.PositiveSmallIntegerField()
     cart=models.ForeignKey(Cart,on_delete=models.CASCADE)
