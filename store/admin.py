@@ -12,7 +12,7 @@ class InventoryFilter(admin.SimpleListFilter):
     def queryset(self, request, queryset):
         if self.value()=='<50':
             return queryset.filter(price__lt=50)
-
+@admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
 
     actions=['clear_inventory']
