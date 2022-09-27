@@ -1,1 +1,1 @@
-# STOREFRONT (django excersise)
+# STOREFRONT (django app)
