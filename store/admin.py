@@ -2,6 +2,9 @@ from distutils.log import ERROR
 from pyexpat.errors import messages
 from django.contrib import admin,messages
 from . import models
+from store.models import Customer
+from django.db.models.functions import Concat
+
 
 class InventoryFilter(admin.SimpleListFilter):
     title='price'
@@ -46,11 +49,26 @@ class CollectionAdmin(admin.ModelAdmin):
 
 
 class CustomerAdmin(admin.ModelAdmin):
-    list_display=['first_name','last_name','email','membership']
+    list_display=['first_name','last_name','email','membership','full']
     list_editable= ['membership']
     list_per_page: 7
     search_fields=['first_name__istartswith']
+    # queryset=Customer.objects.annotate(full_name=Concat('first_name','last_name')) 
+    # x=[i[0]for i in queryset.fetchall()]
 
+    # def full_name(first_name,last_name):
+
+    #     while True :   
+    #          queryset=Customer.objects.annotate(full_name=Concat('first_name','last_name')) 
+    #         # return list(queryset)
+    #     return [i.full_name for i in queryset]
+    #     # lol:list(queryset)
+        # for i in lol :
+        #     return i.full_name 
+        # for i in queryset:
+        #     return i.full_name
+        # return list(queryset).full_name
+        
 class PromotionAdmin(admin.ModelAdmin):
     list_display=['description','discount']
     list_editable= ['discount']
