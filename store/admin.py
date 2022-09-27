@@ -12,9 +12,8 @@ class InventoryFilter(admin.SimpleListFilter):
     def queryset(self, request, queryset):
         if self.value()=='<50':
             return queryset.filter(price__lt=50)
-@admin.register(models.Product)
+# @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
-
     actions=['clear_inventory']
     list_display=['title','price','last_update','inventory_status','the_promotion','promotion_counts']
     list_editable= ['price']

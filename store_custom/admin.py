@@ -1,5 +1,5 @@
 from django.contrib import admin
-from STOREFRONT.store.models import Product
+from store.models import Product
 from store.admin import ProductAdmin
 from tags.models import TaggedItem
 from django.contrib.contenttypes.admin import GenericTabularInline
