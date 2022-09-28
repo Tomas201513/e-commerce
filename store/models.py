@@ -1,9 +1,11 @@
 from itertools import count
+from operator import concat
 from django.db import models
 from django.urls import reverse
 from django.utils.html import format_html, urlencode
 from django.core.validators import MinValueValidator
 from django.db.models.functions import Concat
+from itertools import chain
 
 class Promotion(models.Model):
     description=models.CharField( max_length=255)
@@ -72,13 +74,12 @@ class Customer(models.Model):
     phone=models.CharField(max_length=255)
     birth_date=models.DateTimeField(null=True)
     membership=models.CharField(max_length=1,choices=MEMBERSHIP_CHOICES,default=MEMBERSHIP_BRONZ)
-    # full_name = models.CharField( max_length=128 )
 
-    def full(self):
-        queryset=Customer.objects.annotate(full_name=Concat('first_name','last_name'))         
-        return [x.full_name for x in list(queryset)]
-
-        
+    
+    def Full_Name(self):
+        result_list = list(chain(self.first_name + ' ' +  self.last_name))
+        return ''.join(result_list)                        
+      
 
     def __str__(self) -> str:
         return self.first_name
@@ -130,9 +131,6 @@ class Address(models.Model):
         return self.street
     class Meta:
         ordering=['street']
-
-
-
 
 
 class Cart (models.Model):

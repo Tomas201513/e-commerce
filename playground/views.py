@@ -52,4 +52,4 @@ def full_name(request):
     # queryset=Customer.objects.annotate(
     #     full_name=Concat('first_name','last_name')
    
-    return render(request,'teme.html',{'lol':list(queryset)})
+    return render(request,'teme.html',{'lol':list(queryset)}) #sending queryset as jason

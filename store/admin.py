@@ -1,4 +1,5 @@
 from distutils.log import ERROR
+from pyexpat import model
 from pyexpat.errors import messages
 from django.contrib import admin,messages
 from . import models
@@ -15,7 +16,6 @@ class InventoryFilter(admin.SimpleListFilter):
     def queryset(self, request, queryset):
         if self.value()=='<50':
             return queryset.filter(price__lt=50)
-# @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
     actions=['clear_inventory']
     list_display=['title','price','last_update','inventory_status','the_promotion','promotion_counts']
@@ -49,26 +49,12 @@ class CollectionAdmin(admin.ModelAdmin):
 
 
 class CustomerAdmin(admin.ModelAdmin):
-    list_display=['first_name','last_name','email','membership','full']
+    list_display=['first_name','last_name','email','membership','Full_Name']
     list_editable= ['membership']
     list_per_page: 7
     search_fields=['first_name__istartswith']
-    # queryset=Customer.objects.annotate(full_name=Concat('first_name','last_name')) 
-    # x=[i[0]for i in queryset.fetchall()]
 
-    # def full_name(first_name,last_name):
 
-    #     while True :   
-    #          queryset=Customer.objects.annotate(full_name=Concat('first_name','last_name')) 
-    #         # return list(queryset)
-    #     return [i.full_name for i in queryset]
-    #     # lol:list(queryset)
-        # for i in lol :
-        #     return i.full_name 
-        # for i in queryset:
-        #     return i.full_name
-        # return list(queryset).full_name
-        
 class PromotionAdmin(admin.ModelAdmin):
     list_display=['description','discount']
     list_editable= ['discount']
@@ -119,3 +105,4 @@ admin.site.register(models.Cart,CartAdmin)
 admin.site.register(models.CartItem,CartItemAdmin)
 
 
+# admin.site.register(models.Tag)
