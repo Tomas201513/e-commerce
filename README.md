@@ -1,1 +1,3 @@
-# STOREFRONT (django app)
+# Django backend app
+
+store app
