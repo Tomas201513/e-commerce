@@ -26,7 +26,10 @@ SECRET_KEY = 'django-insecure-t!gn9*to-v5tu=ys49fd79mtlfme#p0swsr3xten@vu#$n$-*j
 DEBUG = True
 
 ALLOWED_HOSTS = []
+REST_FRAMEWORK = {
 
+    'COERCE_DECIMAL_TO_STRING':False
+}
 
 # Application definition
 
@@ -96,6 +99,7 @@ DATABASES = {
         'PASSWORD':'password'
     }
 }
+
 
 # REST_FRAMEWORK = {
 #     # Use Django's standard `django.contrib.auth` permissions,
