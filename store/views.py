@@ -6,7 +6,6 @@ from .models import Product,Order
 from .serializers import ProductSerializer,OrderSerializer
 from rest_framework import status 
 # Create your views here.
-
 @api_view(['GET'])
 def product(request,id):
     # product=Product.objects.get(pk=id)
