@@ -1,5 +1,7 @@
 import collections
 from unicodedata import decimal
+
+from attr import fields
 from rest_framework import serializers
 from store.models import Product,Customer
 
@@ -14,10 +16,12 @@ class CustomerSerializer(serializers.Serializer):
     membership=serializers.CharField()
 
 class ProductSerializer(serializers.Serializer):
-    id=serializers.IntegerField()
-    title=serializers.CharField(max_length=255)
-    price=serializers.DecimalField(max_digits=6, decimal_places=2)
+    class meta:
+        model=Product
+        fields=['id','title','slug','description','price','inventory']
     
+
+
 
 class OrderSerializer(serializers.Serializer):
     id=serializers.IntegerField()
