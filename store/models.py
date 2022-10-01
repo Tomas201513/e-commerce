@@ -99,7 +99,7 @@ class Order(models.Model):
         (PAYMENT_FAILED,'Failed') ]
     placed_at=models.DateTimeField(auto_now_add=True)
     payment_status=models.CharField(max_length=1,choices=MEMBERSHIP_CHOICES,default=PAYMENT_PENDING)
-    customer=models.ForeignKey(Customer,on_delete=models.PROTECT)
+    customer=models.ForeignKey(Customer,on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.payment_status

@@ -18,13 +18,13 @@ def product(request,id):
         serializer=ProductSerializer(product,data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.data)
     
     elif request.method=='DELETE':
-        if Product.OrderItem.count()>0:
-            return Response('eeeeeeeeeeerrrrrrrrrrrrr')
+        # if Product.promotion_set.count()>0:
+        #     return Response('eeeeeeeeeeerrrrrrrrrrrrr')
         Product.delete()
-        return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.data,status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET','POST'])
 def list_product(request):
@@ -42,8 +42,29 @@ def list_product(request):
 
 
 
-@api_view()
+@api_view(['GET','POST'])
 def order_list(request):
-    all_orders=Order.objects.select_related('customer').all()
-    serializer=OrderSerializer(all_orders, many=True)
-    return Response(serializer.data)
+    if request.method=='GET':
+        all_orders=Order.objects.select_related('customer').all()
+        serializer=OrderSerializer(all_orders, many=True)
+        return Response(serializer.data)
+    elif request.method=='POST':
+        serializer=OrderSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
+
+@api_view(['GET','PUT','DELETE'])
+def order(request,id):
+    order=get_object_or_404(Order, pk=id)
+    if request.method=='GET':
+        serializer=OrderSerializer(order)
+        return Response(serializer.data)
+    elif request.method=='PUT':
+        serializer=OrderSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
+    elif request.method=='DELETE':
+        order.delete()
+        return Response(serializer.data,status=status.HTTP_204_NO_CONTENT)
