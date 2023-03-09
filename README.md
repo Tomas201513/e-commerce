@@ -1,3 +1,3 @@
-# Django backend app
+# Django Backend App
 
-store app
+###An E-Commerce Backend App 
